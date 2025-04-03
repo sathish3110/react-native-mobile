@@ -7,20 +7,34 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import styles from "../../assets/styles/login.styles";
 import COLORS from "../../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { useAuthStore } from "../../store/authStore";
 
-export default function index() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, login } = useAuthStore();
 
-  const handleLogin = async () => {};
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Please fill in all fields!");
+      return;
+    }
+    const { success, message } = await login(email, password);
+    if (success) {
+      Alert.alert(message);
+      // router.push("/(auth)/login");
+    } else {
+      Alert.alert(message);
+    }
+  };
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -88,7 +102,11 @@ export default function index() {
                 </TouchableOpacity>
               </View>
             </View>
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleLogin}
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <ActivityIndicator color="#fff" />
               ) : (

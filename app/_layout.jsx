@@ -1,10 +1,33 @@
-import { Stack } from "expo-router";
+import { Stack, useRouter, useSegments } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import SafeScreen from "../components/SafeScreen";
-
+import { StatusBar } from "expo-status-bar";
 // This is the root layout for the app. It uses the expo-router library to handle navigation and routing.
+import { useAuthStore } from "../store/authStore";
+import { useEffect } from "react";
 
 export default function RootLayout() {
+  const { checkAuth, user, token } = useAuthStore();
+  const router = useRouter();
+  const segments = useSegments();
+
+  useEffect(() => {
+    // Check if the user is authenticated when the app loads
+    checkAuth();
+  }, []);
+
+  useEffect(() => {
+    const isAuthScreen = segments[0] === "(auth)";
+    const isLoggedIn = !!user && !!token;
+    if (isLoggedIn && isAuthScreen) {
+      // If the user is logged in and on the auth screen, redirect to the home screen
+      router.replace("/(tabs)");
+    }
+    if (!isLoggedIn && !isAuthScreen) {
+      // If the user is not logged in and not on the auth screen, redirect to the auth screen
+      router.replace("/(auth)");
+    }
+  }, [user, token, segments]);
   return (
     <SafeAreaProvider>
       {/* The SafeAreaProvider component is used to provide a safe area context for the app. This is useful for devices with notches or rounded corners. */}
@@ -20,6 +43,7 @@ export default function RootLayout() {
           <Stack.Screen name="(auth)" />
         </Stack>
       </SafeScreen>
+      <StatusBar style="dark" />
     </SafeAreaProvider>
   );
 }

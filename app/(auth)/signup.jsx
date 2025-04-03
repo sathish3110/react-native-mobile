@@ -24,15 +24,15 @@ export default function signup() {
   const { isLoading, register } = useAuthStore();
   const handleRegister = async () => {
     if (!username || !email || !password) {
-      alert("Please fill in all fields!");
+      Alert.alert("Please fill in all fields!");
       return;
     }
     const { success, message } = await register(username, email, password);
     if (success) {
-      alert(message);
+      Alert.alert(message);
       // router.push("/(auth)/login");
     } else {
-      alert(message);
+      Alert.alert(message);
     }
   };
   return (
@@ -120,7 +120,11 @@ export default function signup() {
                 </TouchableOpacity>
               </View>
             </View>
-            <TouchableOpacity style={styles.button} onPress={handleRegister}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleRegister}
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <ActivityIndicator color="#fff" />
               ) : (
