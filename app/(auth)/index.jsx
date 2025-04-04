@@ -15,6 +15,7 @@ import COLORS from "../../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useAuthStore } from "../../store/authStore";
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -24,15 +25,15 @@ export default function Login() {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert("Please fill in all fields!");
+      Alert.alert("Required", "Please fill in all fields!");
       return;
     }
     const { success, message } = await login(email, password);
     if (success) {
-      Alert.alert(message);
+      Alert.alert("Success", message);
       // router.push("/(auth)/login");
     } else {
-      Alert.alert(message);
+      Alert.alert("Error", message);
     }
   };
   return (

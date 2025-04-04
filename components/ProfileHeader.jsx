@@ -12,7 +12,9 @@ export default function ProfileHeader() {
       <View style={styles.profileInfo}>
         <Text style={styles.username}>{user.username}</Text>
         <Text style={styles.email}>{user.email}</Text>
-        <Text style={styles.date}>{formatMemberSince(user.createdAt)}</Text>
+        <Text style={styles.date}>
+          Joined {formatMemberSince(user.createdAt)}
+        </Text>
       </View>
     </View>
   );

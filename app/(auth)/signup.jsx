@@ -24,15 +24,15 @@ export default function signup() {
   const { isLoading, register } = useAuthStore();
   const handleRegister = async () => {
     if (!username || !email || !password) {
-      Alert.alert("Please fill in all fields!");
+      Alert.alert("Required", "Please fill in all fields!");
       return;
     }
     const { success, message } = await register(username, email, password);
     if (success) {
-      Alert.alert(message);
+      Alert.alert("Success", message);
       // router.push("/(auth)/login");
     } else {
-      Alert.alert(message);
+      Alert.alert("Error", message);
     }
   };
   return (

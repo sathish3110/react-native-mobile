@@ -74,7 +74,7 @@ export default function create() {
 
   const handleSubmit = async () => {
     if (!title || !caption || !imageBase64 || rating === 0) {
-      Alert.alert("Please fill all fields and select an image.");
+      Alert.alert("Error", "Please fill all fields and select an image.");
       return;
     }
     try {
