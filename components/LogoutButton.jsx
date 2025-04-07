@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { Text, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import styles from "../assets/styles/profile.styles";
 import COLORS from "../constants/colors";

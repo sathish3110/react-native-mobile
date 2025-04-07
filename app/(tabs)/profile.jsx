@@ -6,6 +6,7 @@ import {
   RefreshControl,
   Image,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect } from "react";
 import styles from "../../assets/styles/profile.styles";
